@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
+
+
+<style type="text/css">
+	html{
+		background-color: rgba(13, 32, 73, 1);
+	}
+	#currenttime{
+		font-family: 'Catamaran', sans-serif;
+		text-align: center;
+		font-size: 65pt;
+		color: white;
+		padding-top: 20%;
+	}
+	#alarmHour{
+		width: 30px;
+
+
+	}
+	#alarmMinute{
+		width: 30px;
+	}
+	#input{
+		display: inline;
+		float: none;
+		display: flex;
+		width: 300px;
+		padding-left: 240px;
+		padding-top: 30px;
+
+
+	}
+	#input > #alarmhour{
+		flex:1;
+	}
+	#input > #alarmMinute{
+		flex:2;
+	}
+	#input > #ampm{
+		flex:3;
+	}
+	#input > #set{
+		flex:4;
+	}
+	#disp{
+		font-family: 'Catamaran', sans-serif;
+		text-align: center;
+		font-size: 20pt;
+		color: white;
+		padding-top: 15px;
+	}
+
+</style>
+
+
+</head>
+<body>
+
+	<div id=currenttime></div>
+
+	<div id="input">
+		<input type="text" name="hour" id="alarmHour" placeholder="Hour">
+		<input type="text" name="minute" id="alarmMinute" placeholder="Minute">
+		<input type="text" name="" placeholder="AM/PM" id="ampm">
+		<input type="button" name="aset" value="Set" onclick="setAlarm()" id="set">
+		<input type="button" name="stop" value="Stop" onclick="stopAlarm()" id="stop">
+	</div>
+
+	<div id="disp"></div>
+
+
+
+	<script type="text/javascript">
+
+		function currentTime() {
+			var date = new Date();
+			var h = date.getHours();
+			var m = date.getMinutes();
+			var s = date.getSeconds();
+			var day = " AM"
+			
+
+		// if (h < 10) {
+		// 	h = "0" + h;
+		// }
+		// if (h > 12 && h < 21) {
+		// 	h = "0" + h;
+		// }
+		if (m < 10) {
+			m = "0"+m;
+		}
+		if (s < 10) {
+			s = "0"+s;
+		}
+		if (h > 12) {
+			h = h -12;
+			day = " PM"
+		}
+
+		var time = h+":"+m+":"+s+day;
+			document.getElementById("currenttime").innerHTML = time;
+
+		}
+		
+		currentTime();
+		setInterval(currentTime, 1000);
+		
+
+	</script>
+
+	<script type="text/javascript">
+	var sound = new Audio("hot.m4a");
+		sound.loop = true;
+
+	function setAlarm(){
+		//current time & alarm time variables
+		var cD = new Date();
+		var cH = cD.getHours();
+		var cM = cD.getMinutes();
+		var aH = document.getElementById('alarmHour').value;
+		var aM = document.getElementById('alarmMinute').value;
+		var ampm = " AM"
+		
+
+		//function conditions
+
+		if (cH === 0){
+			ampm = " AM"
+		}
+		if (cH >12){
+			cH = cH - 12;
+			ampm = " PM"
+		}
+		//if the alarm time matches the current time play sound.
+		if (aH == cH && aM == cM){
+			sound.play();}
+		
+		document.getElementById('disp').innerHTML = "Alarm Set!"
+		
+
+		setInterval(setAlarm, 1000);
+	}
+		function stopAlarm() {
+			sound.pause();
+		}
+
+
+	</script>
+	
+
+</body>
+</html>
